@@ -1,0 +1,24 @@
+Task:
+Create a single page application that displays a list of Github users by using the Github public API
+with an option to display detailed user data on a separate page.
+
+Requirements:
+• A list of GitHub users (avatar, login) is displayed.
+• The list should support pagination.
+• Click on the user avatar in the list to see the user details with a back button to go back to the
+initial list of users.
+• Single user page should display the user data after refreshing the page.
+• The web application should be responsive.
+• The project should be delivered as a GitHub repository.
+
+Stack:
+• Bootstrap your project with create-react-app.
+• Use Redux and Redux Devtools Extension
+• Use React Router v4
+• Use TypeScript or Flow
+
+Suggestions:
+• Feel free to use a CSS framework or a React Component Library.
+• Keep modern React practices in mind while coding.
+• Document your code when necessary and/or provide a README highlighting your thought
+process.
