@@ -5,19 +5,12 @@ import { Pager } from "react-bootstrap";
 interface Props {
   pages: any;
   handleOnClick(url: string): void;
+  excludedPages?: Array<string>;
 }
 
 class Pagination extends PureComponent<Props> {
-  state = {
-    firstPage: {
-      isDisabled: true
-    },
-    previousPage: {
-      isDisabled: true
-    },
-    nextPage: {
-      isDisabled: false
-    }
+  static defaultProps = {
+    excludedPages: []
   };
   handlePageClick = (data: any) => {
     console.log("thd data", data);
@@ -34,38 +27,47 @@ class Pagination extends PureComponent<Props> {
     );
   };
   render() {
-    const { firstPage, nextPage, previousPage } = this.state;
     const {
       pages: { next, last, first, prev },
-      handleOnClick
+      handleOnClick,
+      excludedPages
     } = this.props;
 
     return (
       <Pager>
-        <Pager.Item
-          onClick={() => handleOnClick(first && first.url)}
-          disabled={!Boolean(first)}
-        >
-          First page
-        </Pager.Item>
-        <Pager.Item
-          onClick={() => handleOnClick(prev && prev.url)}
-          disabled={!Boolean(prev)}
-        >
-          Previous
-        </Pager.Item>
-        <Pager.Item
-          onClick={() => handleOnClick(next && next.url)}
-          disabled={!Boolean(next)}
-        >
-          Next
-        </Pager.Item>
-        <Pager.Item
-          onClick={() => handleOnClick(last && last.url)}
-          disabled={!Boolean(last)}
-        >
-          Last Page
-        </Pager.Item>
+        {excludedPages && !excludedPages.includes("first") && (
+          <Pager.Item
+            onClick={() => handleOnClick(first && first.url)}
+            disabled={!Boolean(first)}
+          >
+            First
+          </Pager.Item>
+        )}
+        {excludedPages && !excludedPages.includes("prev") && (
+          <Pager.Item
+            onClick={() => handleOnClick(prev && prev.url)}
+            disabled={!Boolean(prev)}
+          >
+            Previous
+          </Pager.Item>
+        )}
+        {excludedPages && !excludedPages.includes("next") && (
+          <Pager.Item
+            onClick={() => handleOnClick(next && next.url)}
+            disabled={!Boolean(next)}
+          >
+            Next
+          </Pager.Item>
+        )}
+
+        {excludedPages && !excludedPages.includes("last") && (
+          <Pager.Item
+            onClick={() => handleOnClick(last && last.url)}
+            disabled={!Boolean(last)}
+          >
+            Last
+          </Pager.Item>
+        )}
       </Pager>
     );
   }

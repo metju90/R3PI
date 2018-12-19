@@ -1,8 +1,8 @@
 import {
-  FETCH_USERS_LIST,
-  FETCH_USERS_LIST_ERROR,
-  FETCH_USERS_LIST_LOADING,
-  FETCH_USERS_LIST_PAGES
+  FETCH_REPOS,
+  FETCH_REPOS_ERROR,
+  FETCH_REPOS_LOADING,
+  FETCH_REPOS_PAGES
 } from "../../constants";
 import commonState from "../commonState";
 
@@ -12,23 +12,23 @@ const initialState = {
 
 export default function(state = initialState, action: any) {
   switch (action.type) {
-    case FETCH_USERS_LIST_ERROR: {
+    case FETCH_REPOS_ERROR: {
       return {
         ...state,
         hasError: action.payload
       };
     }
-    case FETCH_USERS_LIST_PAGES:
-      return {
-        ...state,
-        pages: action.payload
-      };
-    case FETCH_USERS_LIST:
+    case FETCH_REPOS:
       return {
         ...state,
         data: action.payload
       };
-    case FETCH_USERS_LIST_LOADING:
+    case FETCH_REPOS_PAGES:
+      return {
+        ...state,
+        pages: action.payload
+      };
+    case FETCH_REPOS_LOADING:
       return {
         ...state,
         isLoading: action.payload

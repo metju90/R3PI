@@ -2,20 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import debounce from "lodash/debounce";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { ClipLoader } from "react-spinners";
+import { Table, Alert } from "react-bootstrap";
 import { fetchUsersList } from "../../actions";
 import User from "./User";
 import "./style.css";
 import Pagination from "../Pagination";
 
 interface Props {
-  usersList: {
-    isLoading: boolean;
-    hasError: boolean;
-    data: any[];
-  };
-  pagination: any;
-  fetchUsersList(since?: number | null): void;
+  isLoading: boolean;
+  hasError: boolean;
+  data: any[];
+  pages: any;
+  fetchUsersList(url: string | null): void;
 }
 
 class UsersList extends Component<Props> {
@@ -32,52 +31,43 @@ class UsersList extends Component<Props> {
     this.fetchUsersList.cancel();
   }
 
-  fetchUsersList(since: number | null) {
-    // this.props.fetchUsersList(since);
+  fetchUsersList(url: string | null) {
+    this.props.fetchUsersList(url);
   }
-
-  fetchMore = () => {
-    let since = null;
-    // console.log();
-    const lastFetchedUser = this.props.usersList.data.slice(-1)[0];
-    if (lastFetchedUser) {
-      since = lastFetchedUser.id;
-    }
-
-    this.fetchUsersList(since);
-  };
 
   render() {
     // console.log("mmmmhmm!!!   re renderinggg", this.props);
-    const { usersList, pagination } = this.props;
+    const { pages, isLoading, hasError, data, fetchUsersList } = this.props;
+    if (hasError) {
+      return <Alert bsStyle="danger">Something went wrong!</Alert>;
+    }
     return (
       <div>
-        <Link to="/user/metju90">Test</Link>
+        {isLoading && <ClipLoader />}
         <div className="table-wrapper">
           <div className="table-body">
-            {usersList.data.map(user => (
+            {data.map(user => (
               <User avatar_url={user.avatar_url} username={user.login} />
             ))}
           </div>
         </div>
-        {/* <Pagination /> */}
-        <div
-          style={{ height: "100px", width: "100px", background: "red" }}
-          onClick={this.fetchMore}
-        >
-          Fetch more!!!
-        </div>
+        <Pagination
+          excludedPages={["prev", "last"]}
+          pages={pages}
+          handleOnClick={fetchUsersList}
+        />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: any) => {
-  // console.log("<<<< ", state);
-  const { usersList, pagination } = state;
+  const { isLoading, pages, data, hasError } = state.usersList;
   return {
-    usersList,
-    pagination
+    isLoading,
+    pages,
+    data,
+    hasError
   };
 };
 
