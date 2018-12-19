@@ -13,7 +13,8 @@ import {
 import { getStore, init as storeInit } from "./redux/store";
 import history from "./history";
 import "./App.css";
-
+import XXX from "./components/UsersList";
+import WWW from "./components/UserDetails";
 const UsersList = lazy(() => import("./components/UsersList"));
 const UserDetails = lazy(() => import("./components/UserDetails"));
 
@@ -29,8 +30,8 @@ const app = () => (
     <Suspense fallback={"Loading..."}>
       <Router history={history}>
         <Col xs={8} xsOffset={2}>
-          <Route path="/" exact component={UsersList} />
-          <Route path="/user/:username" component={UserDetails} />
+          <Route path="/" exact component={XXX} />
+          <Route path="/user/:username" component={WWW} />
         </Col>
       </Router>
     </Suspense>

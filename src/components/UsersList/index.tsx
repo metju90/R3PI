@@ -60,7 +60,7 @@ class UsersList extends Component<Props> {
             ))}
           </div>
         </div>
-        <Pagination />
+        {/* <Pagination /> */}
         <div
           style={{ height: "100px", width: "100px", background: "red" }}
           onClick={this.fetchMore}

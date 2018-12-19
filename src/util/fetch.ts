@@ -4,15 +4,8 @@ const commonHeaders = {
   "Content-Type": "text/plain"
 };
 
-export function fetchGet(endPoint: string) {
-  const _include_headers = function(
-    body: any,
-    response: any,
-    resolveWithFullResponse: any
-  ) {
-    return { headers: response.headers, data: body };
-  };
-  const url = API_ROOT_URL + endPoint;
+export function fetchGet(url: string) {
+  // const url = API_ROOT_URL + endPoint;
   // return fetch("//predict.local/api/tournaments", {
 
   return fetch(url, {

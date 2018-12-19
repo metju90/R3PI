@@ -1,11 +1,14 @@
 import { fetchGet } from "../util";
 import {
-  FETCH_USER_LOADING,
-  FETCH_USER,
-  FETCH_USER_ERROR,
+  FETCH_USER_DETAILS,
+  FETCH_USER_DETAILS_ERROR,
+  FETCH_USER_DETAILS_LOADING,
+  FETCH_USERS_LIST_LOADING,
+  FETCH_USERS_LIST,
+  FETCH_USERS_LIST_ERROR,
   PAGINATION_PAGES,
-  PAGINATION_LOADING,
-  PAGINATION_PREV_ID
+  PAGINATION_PREV_ID,
+  API_ROOT_URL
 } from "../constants";
 import debounce from "lodash/debounce";
 import { SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG } from "constants";
@@ -63,45 +66,51 @@ const fetchUsersList = (since?: number) => (dispatch: any, getState: any) => {
   const { data } = getState().usersList;
   const previousSince = data[0] && data[0].id;
   console.log("hey ther!! ", previousSince);
-  dispatch({ type: FETCH_USER_LOADING, payload: true });
-  fetchGet(`/users${since ? `?since=${since}` : ``}`)
+  dispatch({ type: FETCH_USERS_LIST_LOADING, payload: true });
+  fetchGet(`${API_ROOT_URL}/users${since ? `?since=${since}` : ``}`)
     .then((res: any) => {
       headers = res.headers;
       return res.json();
     })
     .then((res: any) => {
-      // console.log("....  RES", res);
-      // console.log("....>>>>>>>>>>>>>> ", pagination);
-      // console.log("The original!!! ", linkHeaderParser(headers.get("Link")));
-
       dispatch({
         type: PAGINATION_PAGES,
         payload: buildPagination(headers, res, previousSince)
       });
 
       dispatch({
-        type: FETCH_USER,
+        type: FETCH_USERS_LIST,
         payload: res
       });
     })
     .catch((err: any) => {
       console.error("fetching failed", err);
       dispatch({
-        type: FETCH_USER_ERROR,
+        type: FETCH_USERS_LIST_ERROR,
         payload: true
       });
     })
-    .finally(dispatch({ type: FETCH_USER_LOADING, payload: false }));
+    .finally(dispatch({ type: FETCH_USERS_LIST_LOADING, payload: false }));
 };
 
 const fetchNextUsersPage = () => (dispatch: any, getState: any) => {};
 
-const setLoadingOrderOn = () => (dispatch: any) => {
-  dispatch({ type: FETCH_USER_LOADING, payload: true });
+const fetchUserDetails = (username: string) => (
+  dispatch: any,
+  getState: any
+) => {
+  dispatch({ type: FETCH_USER_DETAILS_LOADING, payload: true });
+  fetchGet(`${API_ROOT_URL}/users/${username}`)
+    .then(res => res.json())
+    .then(res => dispatch({ type: FETCH_USER_DETAILS, payload: res }))
+    .catch(err => {
+      console.error("fetching failed", err);
+      dispatch({
+        type: FETCH_USER_DETAILS_LOADING,
+        payload: true
+      });
+    })
+    .finally(dispatch({ type: FETCH_USER_DETAILS_LOADING, payload: false }));
 };
 
-const setLoadingOrderOff = () => (dispatch: any) => {
-  dispatch({ type: FETCH_USER_LOADING, payload: false });
-};
-
-export { fetchUsersList };
+export { fetchUsersList, fetchUserDetails };

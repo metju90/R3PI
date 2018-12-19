@@ -2,7 +2,12 @@ import React, { PureComponent } from "react";
 import ReactPaginate from "react-paginate";
 import { Pager } from "react-bootstrap";
 
-class Pagination extends PureComponent {
+interface Props {
+  pages: any;
+  handleOnClick(url: string): void;
+}
+
+class Pagination extends PureComponent<Props> {
   state = {
     firstPage: {
       isDisabled: true
@@ -17,13 +22,50 @@ class Pagination extends PureComponent {
   handlePageClick = (data: any) => {
     console.log("thd data", data);
   };
+
+  renderPageTab = (pagination: any) => {
+    const { handleOnClick } = this.props;
+    const { url, rel } = pagination;
+    // To fix () => ....
+    return (
+      <Pager.Item onClick={() => handleOnClick(url)}>
+        {rel.charAt(0).toUpperCase() + rel.slice(1)}
+      </Pager.Item>
+    );
+  };
   render() {
     const { firstPage, nextPage, previousPage } = this.state;
+    const {
+      pages: { next, last, first, prev },
+      handleOnClick
+    } = this.props;
+
     return (
       <Pager>
-        <Pager.Item disabled={firstPage.isDisabled}>First page</Pager.Item>
-        <Pager.Item disabled={previousPage.isDisabled}>Previous</Pager.Item>
-        <Pager.Item disabled={nextPage.isDisabled}>Next</Pager.Item>
+        <Pager.Item
+          onClick={() => handleOnClick(first && first.url)}
+          disabled={!Boolean(first)}
+        >
+          First page
+        </Pager.Item>
+        <Pager.Item
+          onClick={() => handleOnClick(prev && prev.url)}
+          disabled={!Boolean(prev)}
+        >
+          Previous
+        </Pager.Item>
+        <Pager.Item
+          onClick={() => handleOnClick(next && next.url)}
+          disabled={!Boolean(next)}
+        >
+          Next
+        </Pager.Item>
+        <Pager.Item
+          onClick={() => handleOnClick(last && last.url)}
+          disabled={!Boolean(last)}
+        >
+          Last Page
+        </Pager.Item>
       </Pager>
     );
   }

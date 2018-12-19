@@ -10,7 +10,7 @@ initial list of users.
 • Single user page should display the user data after refreshing the page.
 • The web application should be responsive.
 • The project should be delivered as a GitHub repository.
-
+organization
 Stack:
 • Bootstrap your project with create-react-app.
 • Use Redux and Redux Devtools Extension
