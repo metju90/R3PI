@@ -1,0 +1,21 @@
+.user-details img {
+  width: 100%;
+}
+
+.user-details .bio {
+  margin: 20px 0;
+}
+
+.user-details .details {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 5px 0;
+}
+.user-details .details svg {
+  margin-right: 5px;
+}
+
+.back-button-wrapper {
+  margin: 20px 0;
+}

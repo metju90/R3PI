@@ -3,3 +3,31 @@
   border-bottom: 1px solid #ddd;
   margin: 10px 0;
 }
+
+.repo a.language {
+  display: flex;
+  align-items: center;
+}
+
+.repo .language-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.repo .description {
+  margin: 15px 0;
+}
+
+.repo .information {
+  display: flex;
+}
+
+.repo .last-updated {
+  color: #aaa;
+}
+
+.repo .information > * {
+  margin-right: 15px;
+}

@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-
+import { distanceInWordsToNow } from "date-fns";
 import { fetchRepos } from "../../actions";
 import Paginaton from "../Pagination";
 import Spinner from "../LoadingSpinner";
+import Language from "./Language";
 import "./style.css";
 
 interface Props {
@@ -27,17 +28,37 @@ class Repos extends PureComponent<Props> {
     }
     return (
       <div className="repos-tab">
-        {data.map((r: any) => {
+        {data.map((repo: any) => {
+          const {
+            language,
+            homepage,
+            name,
+            updated_at,
+            description,
+            forks
+          } = repo;
           return (
             <div className="repo">
-              <h2>{r.name}</h2>
-              <a href={r.url} target="_blank">
-                {r.url}
-              </a>
+              <h2>
+                <a href={homepage} target="_blank">
+                  {name}
+                </a>
+              </h2>
+              {description && <h4 className="description">{description}</h4>}
+              <div className="information">
+                {language && <Language language={language} />}
+                {updated_at && (
+                  <div className="last-updated">
+                    {`Updated ${distanceInWordsToNow(new Date(updated_at))}`}
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
-        <Paginaton handleOnClick={this.props.fetchRepos} pages={pages} />
+        {pages && (
+          <Paginaton handleOnClick={this.props.fetchRepos} pages={pages} />
+        )}
       </div>
     );
   }
