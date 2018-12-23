@@ -1,6 +1,7 @@
 .table-body {
   display: flex;
   flex-flow: wrap;
+  justify-content: center;
 }
 
 .table-row {
@@ -9,8 +10,19 @@
   align-items: center;
   cursor: pointer;
   margin: 20px;
+  width: 120px;
+  transition: 0.3s box-shadow;
+}
+.table-row:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.5);
 }
 
+.table-row object,
 .table-row img {
-  max-width: 100px;
+  max-width: 100%;
+}
+
+.table-row.blurred {
+  filter: blur(1px);
 }

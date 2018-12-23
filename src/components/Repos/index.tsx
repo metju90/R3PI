@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { fetchRepos } from "../../actions";
 import Paginaton from "../Pagination";
+import Spinner from "../LoadingSpinner";
 import "./style.css";
 
 interface Props {
@@ -15,23 +16,24 @@ interface Props {
 }
 
 class Repos extends PureComponent<Props> {
-  state = {
-    repos: []
-  };
   componentDidMount() {
-    console.log("the url is ", this.props.url);
     this.props.fetchRepos(this.props.url);
   }
 
   render() {
     const { data, isLoading, hasError, pages } = this.props;
+    if (isLoading) {
+      return <Spinner />;
+    }
     return (
       <div className="repos-tab">
         {data.map((r: any) => {
           return (
             <div className="repo">
               <h2>{r.name}</h2>
-              <a href={r.ur}>{r.url}</a>
+              <a href={r.url} target="_blank">
+                {r.url}
+              </a>
             </div>
           );
         })}

@@ -12,9 +12,6 @@ class Pagination extends PureComponent<Props> {
   static defaultProps = {
     excludedPages: []
   };
-  handlePageClick = (data: any) => {
-    console.log("thd data", data);
-  };
 
   renderPageTab = (pagination: any) => {
     const { handleOnClick } = this.props;

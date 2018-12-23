@@ -1,19 +1,30 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import {} from "react-bootstrap";
+import classNames from "classnames";
+import { LazyImage } from "react-lazy-images";
 
 interface Props {
   avatar_url: string;
   username: string;
+  isLoading?: boolean;
 }
 
-const User = ({ avatar_url, username }: Props) => {
+const User = ({ avatar_url, username, isLoading }: Props) => {
+  const classes = classNames("table-row box-shadow", { blurred: isLoading });
+  const source = isLoading
+    ? "https://image.freepik.com/free-icon/male-profile-user-shadow_318-40244.jpg"
+    : avatar_url;
+  console.log("is re reinderinng!?!?!?!? ");
   return (
-    <Link to={`/user/${username}`} className="table-row box-shadow">
-      <img src={avatar_url} />
-      <div>{username}</div>
+    /**
+     * Check how lazt image works!!!
+     */
+    <Link to={`/user/${username}`} className={classes}>
+      <img src={source} alt={username} />
+      <div>{isLoading ? "..." : username}</div>
     </Link>
   );
 };
 
-export default User;
+export default memo(User);

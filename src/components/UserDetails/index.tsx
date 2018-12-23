@@ -1,17 +1,21 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import { Col, Tabs, Tab } from "react-bootstrap";
 import { Link, RouteComponentProps, RouteProps } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 
-import { fetchUserDetails } from "../../actions";
-import PersonDetails from "../PersonalDetails";
-import Repos from "../Repos";
+import { fetchUserDetails, resetUserDetails } from "../../actions";
+
+import Spinner from "../LoadingSpinner";
 import "./style.css";
+
+const PersonDetails = lazy(() => import("../PersonalDetails"));
+const Repos = lazy(() => import("../Repos"));
+const Followers = lazy(() => import("../Followers"));
 
 interface Props {
   userDetails: any;
   fetchUserDetails(username: string): void;
+  resetUserDetails(): void;
   match: {
     params: {
       username: string;
@@ -21,12 +25,15 @@ interface Props {
 
 class UserDetails extends Component<Props> {
   state = {
-    key: 0
+    key: 1
   };
   componentDidMount() {
-    console.log("....", this.props.match.params);
     const { username } = this.props.match.params;
     this.props.fetchUserDetails(username);
+  }
+
+  componentWillUnmount() {
+    this.props.resetUserDetails();
   }
 
   handleSelect = (key: any) => {
@@ -34,7 +41,6 @@ class UserDetails extends Component<Props> {
   };
 
   render() {
-    // console.log("the props", this.props);
     const { isLoading, hasError, data } = this.props.userDetails;
     const {
       name,
@@ -48,7 +54,8 @@ class UserDetails extends Component<Props> {
       blog,
       location,
       email,
-      organizations_url
+      organizations_url,
+      followers_url
     } = data;
     const personalData = {
       blog,
@@ -63,14 +70,16 @@ class UserDetails extends Component<Props> {
     };
     return (
       <div className="user-details">
+        {/* {isLoading && <Spinner />} */}
         <Col xs={12}>
           <div className="back-button-wrapper">
             <Link to="/">Home</Link>
           </div>
         </Col>
         <Col xs={12} md={3}>
-          {isLoading && <ClipLoader />}
-          <PersonDetails {...personalData} />
+          <Suspense fallback={<Spinner />}>
+            <PersonDetails {...personalData} />
+          </Suspense>
         </Col>
         <Col xs={12} md={9}>
           <Tabs
@@ -78,11 +87,19 @@ class UserDetails extends Component<Props> {
             onSelect={this.handleSelect}
             id="controlled-tab-example"
           >
-            <Tab eventKey={1} title={`Repositries (${public_repos})`}>
-              {repos_url && <Repos url={repos_url} />}
+            <Tab eventKey={1} title={`Repositries (${public_repos || 0})`}>
+              {repos_url && (
+                <Suspense fallback={"zzz......a.a.a."}>
+                  <Repos url={repos_url} />
+                </Suspense>
+              )}
             </Tab>
-            <Tab eventKey={2} title={`Followers (${followers})`}>
-              Tab 2 content
+            <Tab eventKey={2} title={`Followers (${followers || 0})`}>
+              {followers_url && (
+                <Suspense fallback={"grr suspense followers"}>
+                  <Followers url={followers_url} />
+                </Suspense>
+              )}
             </Tab>
             <Tab eventKey={3} title={`Subscriptions`}>
               Tab 3 content
@@ -102,7 +119,8 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = {
-  fetchUserDetails
+  fetchUserDetails,
+  resetUserDetails
 };
 
 export default connect(

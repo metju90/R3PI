@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/classnames": "^2.2.6",
     "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.119",
     "@types/node": "^10.12.15",
@@ -15,6 +16,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/styled-components": "^4.1.4",
     "@types/url-template": "^2.0.28",
+    "classnames": "^2.2.6",
     "install": "^0.12.2",
     "lodash": "^4.17.11",
     "npm": "^6.5.0",

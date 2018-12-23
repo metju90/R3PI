@@ -13,3 +13,6 @@ Safe guard - in case they change their api, my code will fallback
 the api returns "since}"
 
 error message is too simple...
+
+performance
+Memo, purecomp

@@ -5,28 +5,15 @@ import {
   FETCH_REPOS_LOADING,
   FETCH_REPOS_PAGES
 } from "../constants";
-import linkHeaderParser from "parse-link-header";
+import { commonAction } from "./common";
 
-const fetchRepos = (url: string) => (dispatch: any) => {
-  let headers: any;
-  fetchGet(url)
-    .then(res => {
-      headers = res.headers;
-      return res.json();
-    })
-    .then(res => {
-      const pagination = linkHeaderParser(headers.get("Link")) || {};
-      dispatch({
-        type: FETCH_REPOS_PAGES,
-        payload: pagination
-      });
-      dispatch({
-        type: FETCH_REPOS,
-        payload: res
-      });
-
-      console.log("the reposs.... ", res);
-    });
+const fetchRepos = (url: string) => async (dispatch: any) => {
+  const actionTypes = {
+    loading: FETCH_REPOS_LOADING,
+    data: FETCH_REPOS,
+    error: FETCH_REPOS_ERROR,
+    pages: FETCH_REPOS_PAGES
+  };
+  commonAction(url, dispatch, actionTypes);
 };
-
 export { fetchRepos };

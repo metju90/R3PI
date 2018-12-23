@@ -18,6 +18,15 @@ import WWW from "./components/UserDetails";
 const UsersList = lazy(() => import("./components/UsersList"));
 const UserDetails = lazy(() => import("./components/UserDetails"));
 
+const P = (
+  <div>
+    aaaaa...
+    <Suspense fallback={<div>Loading!!! </div>}>
+      <UsersList />
+    </Suspense>
+  </div>
+);
+
 const getInitiatedStore = () => {
   storeInit();
   return getStore();

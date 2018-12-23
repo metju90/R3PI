@@ -1,28 +1,14 @@
 import { API_ROOT_URL } from "../constants";
 
-const commonHeaders = {
-  "Content-Type": "text/plain"
-};
-
 export function fetchGet(url: string) {
-  // const url = API_ROOT_URL + endPoint;
-  // return fetch("//predict.local/api/tournaments", {
-
-  return fetch(url, {
+  const x = url.includes("?") ? "&" : "?";
+  const t = `&access_token=d4b7b3a3ef40d4366ebbe5dbea4b6e4e008b7787`;
+  const urlToken = url + x + t;
+  console.log(urlToken);
+  return fetch(urlToken, {
     method: "GET",
     headers: {
-      ...commonHeaders
-    }
-  });
-}
-
-export function fetchPost(endPoint: string, data: any) {
-  const url = API_ROOT_URL + endPoint;
-  return fetch(url, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      ...commonHeaders
+      "Content-Type": "text/plain"
     }
   });
 }

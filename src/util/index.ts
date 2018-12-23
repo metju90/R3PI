@@ -1,3 +1,3 @@
-import { fetchGet, fetchPost } from "./fetch";
+import { fetchGet } from "./fetch";
 
-export { fetchGet, fetchPost };
+export { fetchGet };
