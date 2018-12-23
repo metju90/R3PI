@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
+import uuid from "uuid";
 
 import { fetchFollowers } from "../../actions";
 import Paginaton from "../Pagination";
@@ -21,6 +22,9 @@ class Followers extends PureComponent<Props> {
     this.props.fetchFollowers(this.props.url);
   }
 
+  // If you are at http://localhost:3000/user/gaearon#repositories,
+  //  the component wont unmount/remount. the following is
+  // used to update the component's props.
   componentDidUpdate(prevProps: Props) {
     const { url } = this.props;
     if (url != prevProps.url) {
@@ -29,7 +33,6 @@ class Followers extends PureComponent<Props> {
   }
 
   render() {
-    console.log("is follwoers rerendering?");
     const { data, isLoading, hasError, pages } = this.props;
 
     return (
@@ -40,6 +43,7 @@ class Followers extends PureComponent<Props> {
               isLoading={isLoading}
               username={r.login}
               avatar_url={r.avatar_url}
+              key={uuid()}
             />
           );
         })}

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import debounce from "lodash/debounce";
 import { Link } from "react-router-dom";
 import { Table, Alert } from "react-bootstrap";
+import uuid from "uuid";
 
 import { fetchUsersList } from "../../actions";
 import UserLink from "../UserLink";
@@ -20,10 +21,6 @@ interface Props {
 
 class UsersList extends PureComponent<Props> {
   componentDidMount() {
-    // this.props.fetchUsersList();
-    // invokeAction(this.props.fetchUsersList);
-    console.log("mounting!!!! ");
-    // this.fetchUsersList = debounce(this.props.fetchUsersList, 1000);
     this.fetchUsersList(null);
   }
 
@@ -72,6 +69,7 @@ class UsersList extends PureComponent<Props> {
                 isLoading={isLoading}
                 avatar_url={user.avatar_url}
                 username={user.login}
+                key={uuid()}
               />
             ))}
           </div>

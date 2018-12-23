@@ -21,16 +21,25 @@ interface Props {
       username: string;
     };
   };
+  history: any;
+  location: any;
 }
 
 class UserDashboard extends Component<Props> {
+  availableTabs = ["#repositories", "#followers"];
   state = {
-    key: 1
+    hash: "#repositories"
   };
 
   componentDidMount() {
     const { username } = this.props.match.params;
+    const { hash } = this.props.location;
     this.props.fetchUserDetails(username);
+    // `repositories` is shown by default.
+    // The following is to prevent unneccesary re-renders
+    if (hash && hash !== "#repositories" && this.availableTabs.includes(hash)) {
+      this.setState({ hash });
+    }
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -44,11 +53,13 @@ class UserDashboard extends Component<Props> {
     this.props.resetUserDetails();
   }
 
-  handleSelect = (key: any) => {
-    this.setState({ key });
+  handleSelect = (hash: any) => {
+    this.props.history.push(hash);
+    this.setState({ hash });
   };
 
   render() {
+    console.log("propss ", this.props);
     const { isLoading, hasError, data } = this.props.userDetails;
     const {
       name,
@@ -78,10 +89,9 @@ class UserDashboard extends Component<Props> {
     };
     return (
       <div className="user-details">
-        {/* {isLoading && <Spinner />} */}
         <Col xs={12}>
           <div className="back-button-wrapper">
-            <Link to="/">Go back to users list</Link>
+            <Link to="/">Go back</Link>
           </div>
         </Col>
         <Col xs={12} md={3}>
@@ -91,26 +101,29 @@ class UserDashboard extends Component<Props> {
         </Col>
         <Col xs={12} md={9}>
           <Tabs
-            activeKey={this.state.key}
+            activeKey={this.state.hash}
             onSelect={this.handleSelect}
             id="controlled-tab-example"
           >
-            <Tab eventKey={1} title={`Repositries (${public_repos || 0})`}>
+            <Tab
+              eventKey={"#repositories"}
+              title={`Repositories (${public_repos || 0})`}
+            >
               {repos_url && (
-                <Suspense fallback={"zzz......a.a.a."}>
+                <Suspense fallback={<Spinner />}>
                   <Repos url={repos_url} />
                 </Suspense>
               )}
             </Tab>
-            <Tab eventKey={2} title={`Followers (${followers || 0})`}>
+            <Tab
+              eventKey={"#followers"}
+              title={`Followers (${followers || 0})`}
+            >
               {followers_url && (
-                <Suspense fallback={"grr suspense followers"}>
+                <Suspense fallback={<Spinner />}>
                   <Followers url={followers_url} />
                 </Suspense>
               )}
-            </Tab>
-            <Tab eventKey={3} title={`Subscriptions`}>
-              Tab 3 content
             </Tab>
           </Tabs>
         </Col>
