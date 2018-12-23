@@ -24,6 +24,7 @@ class UsersList extends PureComponent<Props> {
     this.fetchUsersList(null);
   }
 
+  // Debugging code...
   UNSAFE_componentWillReceiveProps(nextProps: any) {
     Object.keys(nextProps)
       .filter(key => {
@@ -43,21 +44,19 @@ class UsersList extends PureComponent<Props> {
       });
   }
 
-  componentWillUnmount() {
-    //@ts-ignore
-    // this.fetchUsersList.cancel();
-  }
-
   fetchUsersList(url: string | null) {
     this.props.fetchUsersList(url);
   }
 
   render() {
     const { pages, isLoading, hasError, data, fetchUsersList } = this.props;
-    // console.log(">>>!>!>!>!>!>!>>!", data, isLoading);
 
     if (hasError) {
       return <Alert bsStyle="danger">Something went wrong!</Alert>;
+    }
+
+    if (isLoading) {
+      return <Spinner />;
     }
 
     return (
@@ -66,7 +65,6 @@ class UsersList extends PureComponent<Props> {
           <div className="table-body">
             {data.map(user => (
               <UserLink
-                isLoading={isLoading}
                 avatar_url={user.avatar_url}
                 username={user.login}
                 key={uuid()}

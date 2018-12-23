@@ -1,5 +1,6 @@
 .user-details img {
   width: 100%;
+  background: url("/static/media/shadow-user.94ce55ff.jpg");
 }
 
 .user-details .bio {

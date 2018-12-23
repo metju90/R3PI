@@ -34,13 +34,14 @@ class Followers extends PureComponent<Props> {
 
   render() {
     const { data, isLoading, hasError, pages } = this.props;
-
+    if (isLoading) {
+      return <Spinner />;
+    }
     return (
       <div className="followers-tab-content">
         {data.map((r: any) => {
           return (
             <UserLink
-              isLoading={isLoading}
               username={r.login}
               avatar_url={r.avatar_url}
               key={uuid()}
