@@ -8,11 +8,15 @@ interface Props {
 const Language = ({ language }: Props) => {
   const languageObject = (colors as any)[language];
   return (
-    <a className="language" href={languageObject.url} target="_blank">
+    <a
+      className="language"
+      href={languageObject && languageObject.url}
+      target="_blank"
+    >
       <div
         className="language-color"
         style={{
-          background: languageObject.color
+          background: languageObject && languageObject.color
         }}
       />
       {language}

@@ -1,6 +1,6 @@
 .user-details img {
-  width: 100%;
-  background: url("/static/media/shadow-user.94ce55ff.jpg");
+  width: auto;
+  max-height: 200px;
 }
 
 .user-details .bio {
@@ -19,4 +19,24 @@
 
 .back-button-wrapper {
   margin: 20px 0;
+}
+
+#tabs-wrapper {
+  word-break: break-all;
+}
+
+.user-details .personal-details {
+  margin-bottom: 30px;
+}
+
+/* Laptop onwards */
+@media only screen and (min-width: 992px) {
+  .user-details img {
+    width: 100%;
+    max-height: none;
+  }
+
+  .user-details .personal-details {
+    margin-bottom: 0px;
+  }
 }

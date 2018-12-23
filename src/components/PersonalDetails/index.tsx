@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   FaBriefcase,
   FaBlogger,
@@ -31,7 +31,7 @@ const PersonalDetails = ({
   organizations_url
 }: Props) => {
   return (
-    <div>
+    <div className={"personal-details"}>
       <img alt={name} src={avatar_url} />
       <h3>{name}</h3>
       <h4>{login}</h4>
@@ -44,4 +44,4 @@ const PersonalDetails = ({
   );
 };
 
-export default PersonalDetails;
+export default memo(PersonalDetails);

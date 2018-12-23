@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import ReactPaginate from "react-paginate";
 import { Pager } from "react-bootstrap";
 import differenceWith from "lodash/differenceWith";
@@ -44,4 +44,4 @@ const Pagination = ({ pages, handleOnClick, excludedPages }: Props) => {
   );
 };
 
-export default memo(Pagination);
+export default Pagination;

@@ -1,4 +1,4 @@
-import React, { PureComponent, memo, useState } from "react";
+import React, { PureComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import {} from "react-bootstrap";
 import classNames from "classnames";
@@ -34,10 +34,10 @@ class UserLink extends PureComponent<Props> {
           alt={username}
           onLoad={this.updateState}
         />
-        <div>{username}</div>
+        <div className="name">{username}</div>
       </Link>
     );
   }
 }
 
-export default memo(UserLink);
+export default UserLink;

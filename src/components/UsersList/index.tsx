@@ -1,4 +1,4 @@
-import React, { PureComponent, lazy, Suspense } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import debounce from "lodash/debounce";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ interface Props {
   fetchUsersList(url: string | null): void;
 }
 
-class UsersList extends PureComponent<Props> {
+class UsersList extends Component<Props> {
   componentDidMount() {
     this.fetchUsersList(null);
   }

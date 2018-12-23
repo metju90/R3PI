@@ -13,19 +13,8 @@ import {
 import { getStore, init as storeInit } from "./redux/store";
 import history from "./history";
 import "./App.css";
-import XXX from "./components/UsersList";
-import WWW from "./components/UserDashboard";
-const UsersList = lazy(() => import("./components/UsersList"));
-const UserDashboard = lazy(() => import("./components/UserDashboard"));
-
-const P = (
-  <div>
-    aaaaa...
-    <Suspense fallback={<div>Loading!!! </div>}>
-      <UsersList />
-    </Suspense>
-  </div>
-);
+import UsersList from "./components/UsersList";
+import UserDashboard from "./components/UserDashboard";
 
 const getInitiatedStore = () => {
   storeInit();
@@ -38,9 +27,9 @@ const app = () => (
   <Provider store={store}>
     <Suspense fallback={"Loading..."}>
       <Router history={history}>
-        <Col xs={10} xsOffset={1}>
-          <Route path="/" exact component={XXX} />
-          <Route path="/user/:username" component={WWW} />
+        <Col md={10} mdOffset={1} xs={12}>
+          <Route path="/" exact component={UsersList} />
+          <Route path="/user/:username" component={UserDashboard} />
         </Col>
       </Router>
     </Suspense>

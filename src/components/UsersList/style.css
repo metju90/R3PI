@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  margin: 20px;
+  margin: 30px 7px 0;
   width: 100px;
   transition: 0.3s box-shadow, 0.1s transform;
   word-break: break-word;
@@ -26,4 +26,22 @@
 
 .table-row.blurred {
   filter: blur(1px);
+}
+
+.table-row .name {
+  padding: 5px;
+}
+
+.user-details .table-row {
+  width: 85px;
+}
+
+/* Tablet onwards */
+@media only screen and (min-width: 768px) {
+  .table-row {
+    margin: 20px;
+  }
+  .user-details .table-row {
+    width: 100px;
+  }
 }
