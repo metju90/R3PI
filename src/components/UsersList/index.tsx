@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Table, Alert } from "react-bootstrap";
 
 import { fetchUsersList } from "../../actions";
-import User from "./User";
+import UserLink from "../UserLink";
 import Pagination from "../Pagination";
 import Spinner from "../LoadingSpinner";
 import "./style.css";
@@ -68,7 +68,7 @@ class UsersList extends PureComponent<Props> {
         <div className="table-wrapper">
           <div className="table-body">
             {data.map(user => (
-              <User
+              <UserLink
                 isLoading={isLoading}
                 avatar_url={user.avatar_url}
                 username={user.login}

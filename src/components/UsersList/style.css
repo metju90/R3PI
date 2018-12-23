@@ -10,8 +10,8 @@
   align-items: center;
   cursor: pointer;
   margin: 20px;
-  width: 120px;
-  transition: 0.3s box-shadow;
+  width: 100px;
+  transition: 0.3s box-shadow, 0.1s transform;
 }
 .table-row:hover {
   transform: scale(1.05);

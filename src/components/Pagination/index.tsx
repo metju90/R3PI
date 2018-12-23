@@ -16,7 +16,6 @@ class Pagination extends PureComponent<Props> {
   renderPageTab = (pagination: any) => {
     const { handleOnClick } = this.props;
     const { url, rel } = pagination;
-    // To fix () => ....
     return (
       <Pager.Item onClick={() => handleOnClick(url)}>
         {rel.charAt(0).toUpperCase() + rel.slice(1)}
@@ -24,11 +23,9 @@ class Pagination extends PureComponent<Props> {
     );
   };
   render() {
-    const {
-      pages: { next, last, first, prev },
-      handleOnClick,
-      excludedPages
-    } = this.props;
+    const { pages, handleOnClick, excludedPages } = this.props;
+    if (!this.props.pages) return null;
+    const { next, last, first, prev } = pages;
 
     return (
       <Pager>
