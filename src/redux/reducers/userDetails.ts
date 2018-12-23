@@ -16,12 +16,12 @@ export default function(state = initialState, action: any) {
     case FETCH_USER_DETAILS_ERROR:
       return {
         ...state,
-        hasError: action.payload
+        ...action.payload
       };
     case FETCH_USER_DETAILS:
       return {
         ...state,
-        data: action.payload
+        ...action.payload
       };
     case FETCH_USER_DETAILS_LOADING:
       return {

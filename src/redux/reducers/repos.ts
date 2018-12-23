@@ -15,13 +15,13 @@ export default function(state = initialState, action: any) {
     case FETCH_REPOS_ERROR: {
       return {
         ...state,
-        hasError: action.payload
+        ...action.payload
       };
     }
     case FETCH_REPOS:
       return {
         ...state,
-        data: action.payload
+        ...action.payload
       };
     case FETCH_REPOS_PAGES:
       return {

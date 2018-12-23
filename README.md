@@ -21,4 +21,6 @@ HOW I WORK - refacotring https://github.com/metju90/R3PI/commit/53e373fc48f48c84
 
 urls hashes
 
-image loading, spinner and default image
+image loading, spinner and default image. UX + performance
+
+CSS mobile first approach (https://stackoverflow.com/questions/51233235/css-techniques-for-responsive-web-design/51233397#answer-51233397)
