@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { memo } from "react";
 import { connect } from "react-redux";
 import uuid from "uuid";
 
@@ -9,52 +9,36 @@ import UserLink from "../UserLink";
 import "./style.css";
 
 interface Props {
-  url: string;
-  fetchFollowers(url: string): void;
-  data: any[];
-  isLoading: boolean;
-  hasError: boolean;
-  pages: any;
+  followers: {
+    data: any[];
+    isLoading: boolean;
+    hasError: boolean;
+    pages: any;
+  };
+  fetchFollowers(): void;
+  isUserDetailsLoading: boolean;
 }
 
-class Followers extends PureComponent<Props> {
-  componentDidMount() {
-    this.props.fetchFollowers(this.props.url);
+const Followers = ({
+  followers,
+  fetchFollowers,
+  isUserDetailsLoading
+}: Props) => {
+  const { data, isLoading, hasError, pages } = followers;
+  if (isLoading || isUserDetailsLoading) {
+    return <Spinner />;
   }
-
-  // If you are at http://localhost:3000/user/gaearon#repositories,
-  //  the component wont unmount/remount. the following is
-  // used to update the component's props.
-  componentDidUpdate(prevProps: Props) {
-    const { url } = this.props;
-    if (url != prevProps.url) {
-      this.props.fetchFollowers(url);
-    }
-  }
-
-  render() {
-    const { data, isLoading, hasError, pages } = this.props;
-    if (isLoading) {
-      return <Spinner />;
-    }
-    return (
-      <div className="followers-tab-content">
-        {data.map((r: any) => {
-          return (
-            <UserLink
-              username={r.login}
-              avatar_url={r.avatar_url}
-              key={uuid()}
-            />
-          );
-        })}
-        {pages && (
-          <Paginaton handleOnClick={this.props.fetchFollowers} pages={pages} />
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="followers-tab-content">
+      {data.map((r: any) => {
+        return (
+          <UserLink username={r.login} avatar_url={r.avatar_url} key={uuid()} />
+        );
+      })}
+      {pages && <Paginaton handleOnClick={fetchFollowers} pages={pages} />}
+    </div>
+  );
+};
 
 const mapStateToProps = (state: any) => {
   const {
@@ -68,11 +52,4 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = {
-  fetchFollowers
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Followers);
+export default memo(Followers);

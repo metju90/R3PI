@@ -3,7 +3,12 @@ import { connect } from "react-redux";
 import { Col, Tabs, Tab } from "react-bootstrap";
 import { Link, RouteComponentProps, RouteProps } from "react-router-dom";
 
-import { fetchUserDetails, resetUserDetails } from "../../actions";
+import {
+  fetchUserDetails,
+  resetUserDetails,
+  fetchFollowers,
+  fetchRepos
+} from "../../actions";
 
 import Spinner from "../LoadingSpinner";
 import "./style.css";
@@ -14,8 +19,12 @@ const Followers = lazy(() => import("../Followers"));
 
 interface Props {
   userDetails: any;
+  followers: any;
+  repos: any;
   fetchUserDetails(username: string): void;
   resetUserDetails(): void;
+  fetchRepos(url?: string): void;
+  fetchFollowers(url?: string): void;
   match: {
     params: {
       username: string;
@@ -28,7 +37,8 @@ interface Props {
 class UserDashboard extends Component<Props> {
   availableTabs = ["#repositories", "#followers"];
   state = {
-    hash: "#repositories"
+    hash: "#repositories",
+    isLoading: false
   };
 
   componentDidMount() {
@@ -44,8 +54,20 @@ class UserDashboard extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const { username } = this.props.match.params;
+    const { repos_url, followers_url } = this.props.userDetails.data;
+    const followers = this.props;
+
     if (username != prevProps.match.params.username) {
       this.props.fetchUserDetails(username);
+      return;
+    }
+
+    if (followers_url != prevProps.userDetails.data.followers_url) {
+      this.props.fetchFollowers(followers_url);
+    }
+
+    if (repos_url != prevProps.userDetails.data.repos_url) {
+      this.props.fetchRepos(repos_url);
     }
   }
 
@@ -59,13 +81,22 @@ class UserDashboard extends Component<Props> {
   };
 
   render() {
-    console.log("propss ", this.props);
-    const { isLoading, hasError, data } = this.props.userDetails;
+    const {
+      followers: followersReducer,
+      repos: reposReducer,
+      fetchFollowers,
+      fetchRepos
+    } = this.props;
+    const {
+      isLoading: isUserDetailsLoading,
+      hasError,
+      data
+    } = this.props.userDetails;
     const {
       name,
       repos_url,
       public_repos,
-      followers,
+      followers: followersCount,
       avatar_url,
       login,
       bio,
@@ -85,11 +116,12 @@ class UserDashboard extends Component<Props> {
       avatar_url,
       login,
       bio,
-      organizations_url
+      organizations_url,
+      isUserDetailsLoading
     };
     return (
       <div className="user-details">
-        <Col xs={12}>
+        <Col md={12}>
           <div className="back-button-wrapper">
             <Link to="/">Go back</Link>
           </div>
@@ -103,25 +135,29 @@ class UserDashboard extends Component<Props> {
           <Tabs
             activeKey={this.state.hash}
             onSelect={this.handleSelect}
-            id="controlled-tab-example"
+            id="tabs-wrapper"
           >
             <Tab
               eventKey={"#repositories"}
               title={`Repositories (${public_repos || 0})`}
             >
-              {repos_url && (
+              {reposReducer && (
                 <Suspense fallback={<Spinner />}>
-                  <Repos url={repos_url} />
+                  <Repos repos={reposReducer} fetchRepos={fetchRepos} />
                 </Suspense>
               )}
             </Tab>
             <Tab
               eventKey={"#followers"}
-              title={`Followers (${followers || 0})`}
+              title={`Followers (${followersCount || 0})`}
             >
-              {followers_url && (
+              {followersReducer && (
                 <Suspense fallback={<Spinner />}>
-                  <Followers url={followers_url} />
+                  <Followers
+                    isUserDetailsLoading={isUserDetailsLoading}
+                    fetchFollowers={fetchFollowers}
+                    followers={followersReducer}
+                  />
                 </Suspense>
               )}
             </Tab>
@@ -133,15 +169,20 @@ class UserDashboard extends Component<Props> {
 }
 
 const mapStateToProps = (state: any) => {
-  const { userDetails } = state;
+  const { userDetails, followers, repos } = state;
+
   return {
-    userDetails
+    userDetails,
+    followers,
+    repos
   };
 };
 
 const mapDispatchToProps = {
   fetchUserDetails,
-  resetUserDetails
+  resetUserDetails,
+  fetchFollowers,
+  fetchRepos
 };
 
 export default connect(

@@ -15,13 +15,13 @@ export default function(state = initialState, action: any) {
     case FETCH_FOLLOWERS_ERROR: {
       return {
         ...state,
-        hasError: action.payload
+        ...action.payload
       };
     }
     case FETCH_FOLLOWERS:
       return {
         ...state,
-        data: action.payload
+        ...action.payload
       };
     case FETCH_FOLLOWERS_PAGES:
       return {

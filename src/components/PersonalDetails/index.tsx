@@ -7,17 +7,19 @@ import {
 } from "react-icons/fa";
 
 import Details from "./Details";
+import Image from "../Image";
+import Spinner from "../LoadingSpinner";
 
 interface Props {
   login: string;
   avatar_url: string;
-  name?: string;
+  name: string;
+  isUserDetailsLoading: boolean;
   location?: string;
   company?: string;
   email?: string;
   blog?: string;
   bio?: string;
-  organizations_url?: string;
 }
 const PersonalDetails = ({
   name,
@@ -28,11 +30,14 @@ const PersonalDetails = ({
   blog,
   location,
   bio,
-  organizations_url
+  isUserDetailsLoading
 }: Props) => {
+  if (isUserDetailsLoading) {
+    return <Spinner />;
+  }
   return (
     <div className={"personal-details"}>
-      <img alt={name} src={avatar_url} />
+      <Image source={avatar_url} alt={login} />
       <h3>{name}</h3>
       <h4>{login}</h4>
       {bio && <div className="bio">{bio}</div>}
@@ -40,6 +45,7 @@ const PersonalDetails = ({
       {email && <Details Icon={FaEnvelope} details={email} />}
       {blog && <Details Icon={FaBlogger} details={blog} />}
       {location && <Details Icon={FaMapMarker} details={location} />}
+      )}
     </div>
   );
 };

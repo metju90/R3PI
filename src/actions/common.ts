@@ -36,16 +36,21 @@ const commonAction = async (
     }
     dispatch({
       type: actionTypes.data,
-      payload: responseData
+      payload: {
+        data: responseData,
+        isLoading: false
+      }
     });
   } catch (err) {
     console.error("FETCH_FOLLOWERS_ERROR", err);
     dispatch({
       type: actionTypes.error,
-      payload: true
+      payload: {
+        isLoading: false,
+        hasError: true
+      }
     });
   }
-  dispatch({ type: actionTypes.loading, payload: false });
 };
 
 export { commonAction };
