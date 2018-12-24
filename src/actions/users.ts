@@ -18,51 +18,18 @@ import linkHeaderParser from "parse-link-header";
 import urlTemplate from "url-template";
 import { commonAction } from "./common";
 
-const getFirstUserId = (usersList: any) => usersList[0] && usersList[0].id;
-
 const fetchUsersList = (url?: string | null) => async (dispatch: any) => {
-  dispatch({ type: FETCH_USERS_LIST_LOADING, payload: { isLoading: true } });
-  try {
-    const response = await fetchGet(`${url ? url : `${API_ROOT_URL}/users`}`);
-    if (response.status < 200 || response.status >= 300) {
-      dispatch({
-        type: FETCH_USERS_LIST_ERROR,
-        payload: true
-      });
-      return null;
-    }
-    let headers: any;
-    headers = response.headers;
-    const pagination = linkHeaderParser(headers.get("Link")) || {};
-    const responseData = await response.json();
-    if (pagination.first) {
-      pagination.first.url = urlTemplate
-        .parse(pagination.first.url)
-        .expand({ since: 0 });
-    }
-    dispatch({
-      type: FETCH_USERS_LIST_PAGES,
-      payload: {
-        pages: pagination
-      }
-    });
-    dispatch({
-      type: FETCH_USERS_LIST,
-      payload: {
-        data: responseData,
-        isLoading: false
-      }
-    });
-  } catch (err) {
-    console.error("FETCH_USERS_LIST_ERROR", err);
-    dispatch({
-      type: FETCH_USERS_LIST_ERROR,
-      payload: {
-        hasError: true,
-        isLoading: false
-      }
-    });
-  }
+  // using the same action for initial request
+  // and pagination's first/next page request
+  url = url ? url : `${API_ROOT_URL}/users`;
+
+  const actionTypes = {
+    loading: FETCH_USERS_LIST,
+    pages: FETCH_USERS_LIST_PAGES,
+    error: FETCH_USERS_LIST_ERROR,
+    data: FETCH_USERS_LIST
+  };
+  commonAction(url, dispatch, actionTypes);
 };
 
 const resetUserDetails = () => (dispatch: any) =>

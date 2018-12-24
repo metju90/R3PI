@@ -12,6 +12,7 @@ const initialState = {
 
 export default function(state = initialState, action: any) {
   switch (action.type) {
+    case FETCH_USERS_LIST_ERROR:
     case FETCH_USERS_LIST_PAGES:
     case FETCH_USERS_LIST:
     case FETCH_USERS_LIST_LOADING:

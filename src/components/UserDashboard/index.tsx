@@ -1,6 +1,6 @@
 import React, { Component, lazy, Suspense } from "react";
 import { connect } from "react-redux";
-import { Col, Tabs, Tab } from "react-bootstrap";
+import { Col, Tabs, Tab, Alert } from "react-bootstrap";
 import { Link, RouteComponentProps, RouteProps } from "react-router-dom";
 
 import {
@@ -87,7 +87,7 @@ class UserDashboard extends Component<Props> {
 
   // Used to reset the count in `Repo(n)` and `Followers(n)`
   // When the user data is being fetched.
-  getCountIfIsNotLoading = (count: number | null) => {
+  getCountIfItsNotLoading = (count: number | null) => {
     const { isLoading } = this.props.userDetails;
     return `(${isLoading ? 0 : count ? count : 0})`;
   };
@@ -131,8 +131,14 @@ class UserDashboard extends Component<Props> {
       organizations_url,
       isUserDetailsLoading
     };
+
     return (
       <div className="user-details">
+        {hasError && (
+          <Alert bsStyle="danger">
+            Something went wrong! Your request was not completed.
+          </Alert>
+        )}
         <Col md={12}>
           <div className="back-button-wrapper">
             <Link to="/">Go back</Link>
@@ -151,7 +157,7 @@ class UserDashboard extends Component<Props> {
           >
             <Tab
               eventKey={"#repositories"}
-              title={`Repositories ${this.getCountIfIsNotLoading(
+              title={`Repositories ${this.getCountIfItsNotLoading(
                 public_repos
               )}`}
             >
@@ -167,7 +173,9 @@ class UserDashboard extends Component<Props> {
             </Tab>
             <Tab
               eventKey={"#followers"}
-              title={`Followers ${this.getCountIfIsNotLoading(followersCount)}`}
+              title={`Followers ${this.getCountIfItsNotLoading(
+                followersCount
+              )}`}
             >
               {followersReducer && (
                 <Suspense fallback={<Spinner />}>

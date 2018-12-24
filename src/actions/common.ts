@@ -1,6 +1,7 @@
 import { fetchGet } from "../util";
-
+import { FETCH_USERS_LIST_PAGES } from "../constants";
 import linkHeaderParser from "parse-link-header";
+import urlTemplate from "url-template";
 
 interface ActionTypesProps {
   loading: string;
@@ -32,6 +33,16 @@ const commonAction = async (
     headers = response.headers;
     const pagination = linkHeaderParser(headers.get("Link")) || null;
     if (actionTypes.pages) {
+      // This is used only for the users list.
+      if (
+        pagination &&
+        pagination.first &&
+        actionTypes.pages === FETCH_USERS_LIST_PAGES
+      ) {
+        pagination.first.url = urlTemplate
+          .parse(pagination.first.url)
+          .expand({ since: 0 });
+      }
       dispatch({
         type: actionTypes.pages,
         payload: {
@@ -43,7 +54,8 @@ const commonAction = async (
       type: actionTypes.data,
       payload: {
         data: responseData,
-        isLoading: false
+        isLoading: false,
+        hasError: false
       }
     });
   } catch (err) {

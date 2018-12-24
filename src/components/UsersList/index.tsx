@@ -24,36 +24,12 @@ class UsersList extends Component<Props> {
     this.fetchUsersList(null);
   }
 
-  // Debugging code...
-  UNSAFE_componentWillReceiveProps(nextProps: any) {
-    Object.keys(nextProps)
-      .filter(key => {
-        //@ts-ignore
-        return nextProps[key] !== this.props[key];
-      })
-      .map(key => {
-        console.log(
-          "changed property:",
-          key,
-          "from",
-          //@ts-ignore
-          this.props[key],
-          "to",
-          nextProps[key]
-        );
-      });
-  }
-
   fetchUsersList(url: string | null) {
     this.props.fetchUsersList(url);
   }
 
   render() {
     const { pages, isLoading, hasError, data, fetchUsersList } = this.props;
-
-    if (hasError) {
-      return <Alert bsStyle="danger">Something went wrong!</Alert>;
-    }
 
     if (isLoading) {
       return <Spinner />;
@@ -62,6 +38,11 @@ class UsersList extends Component<Props> {
     return (
       <div>
         <div className="table-wrapper">
+          {hasError && (
+            <Alert bsStyle="danger">
+              Something went wrong! Your request was not completed
+            </Alert>
+          )}
           <div className="table-body">
             {data.map(user => (
               <UserLink
