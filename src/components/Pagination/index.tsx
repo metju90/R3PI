@@ -15,9 +15,11 @@ interface Props {
   excludedPages?: Array<string>;
 }
 
+const ALL_PAGES = ["first", "prev", "next", "last"];
+
 const Pagination = ({ pages, handleOnClick, excludedPages }: Props) => {
   const availablePages = differenceWith(
-    ["first", "prev", "next", "last"],
+    ALL_PAGES,
     //@ts-ignore
     excludedPages,
     isEqual

@@ -45,7 +45,6 @@ const PersonalDetails = ({
       {email && <Details Icon={FaEnvelope} details={email} />}
       {blog && <Details Icon={FaBlogger} details={blog} />}
       {location && <Details Icon={FaMapMarker} details={location} />}
-      )}
     </div>
   );
 };

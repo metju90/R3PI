@@ -37,8 +37,7 @@ interface Props {
 class UserDashboard extends Component<Props> {
   availableTabs = ["#repositories", "#followers"];
   state = {
-    hash: "#repositories",
-    isLoading: false
+    hash: "#repositories"
   };
 
   componentDidMount() {
@@ -46,7 +45,7 @@ class UserDashboard extends Component<Props> {
     const { hash } = this.props.location;
     this.props.fetchUserDetails(username);
     // `repositories` is shown by default.
-    // The following is to prevent unneccesary re-renders
+    // The following conditions are to prevent unneccesary re-renders
     if (hash && hash !== "#repositories" && this.availableTabs.includes(hash)) {
       this.setState({ hash });
     }

@@ -1,8 +1,7 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Col } from "react-bootstrap";
 import { Provider } from "react-redux";
-// import ErrorBoundary from "./components/ErrorBoundary";
 import {
   Router,
   Route,
@@ -10,11 +9,12 @@ import {
   Switch,
   RouteComponentProps
 } from "react-router-dom";
+
 import { getStore, init as storeInit } from "./redux/store";
 import history from "./history";
-import "./App.css";
 import UsersList from "./components/UsersList";
 import UserDashboard from "./components/UserDashboard";
+import "./app.css";
 
 const getInitiatedStore = () => {
   storeInit();
@@ -25,14 +25,12 @@ const store = getInitiatedStore();
 
 const app = () => (
   <Provider store={store}>
-    <Suspense fallback={"Loading..."}>
-      <Router history={history}>
-        <Col md={10} mdOffset={1} xs={12}>
-          <Route path="/" exact component={UsersList} />
-          <Route path="/user/:username" component={UserDashboard} />
-        </Col>
-      </Router>
-    </Suspense>
+    <Router history={history}>
+      <Col md={10} mdOffset={1} xs={12}>
+        <Route path="/" exact component={UsersList} />
+        <Route path="/user/:username" component={UserDashboard} />
+      </Col>
+    </Router>
   </Provider>
 );
 
