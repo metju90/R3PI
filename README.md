@@ -2,7 +2,7 @@
 
 To run the application in dev mode, clone the repo and execute `npm i && npm start` in the root directory.
 
-# Performance
+## Performance
 
 Website performance is a field which I find very interesting and I've put an effort to ensure this application is optimized. See features related to web performance below:
 
@@ -24,14 +24,14 @@ On top of the listed requirements, I added the following:
 - Navigation - Additional to the two required routes, certain section of the User profile (repositories and followers) are accessible with a direct link. When seeing a user followers, clicking a particular follower will take you to his/her profile.
 - Pagination - Pagination is used in the homepage and as well in `Repos` and `Followers` tab in user's profile.
 
-# Reusability
+## Reusability
 
 I reused as many components as I could. Namely:
 
 - `src/components/Pagination`
 - `src/components/UserLink`
 
-# Abstractions
+## Abstractions
 
 As an engineer, I do love abstractions and I tried to the best of my abilities to keep my code `dry`. You can see my attempts in the following files:
 
@@ -76,6 +76,12 @@ Testing is very important part for sustainable and scalable software. I preferre
 ## Github's API access token
 
 The token is in the source code. I will revoke the token's permission once this review is finished.
+
+## Refactoring
+
+I have done two "big" refactors which two different developers may have different opinion about. The last refactor was the one in  [Reducers and actions](https://github.com/metju90/R3PI/commit/c35d8bef87f0d30ee9761ea0ca2207bf5ccab958) and the first one was to [downgrade two components from class to functional and pulling some of their logic into their parent](https://github.com/metju90/R3PI/commit/dccc2a66caf70757e4d26d3ec61466052b5fd79d)
+
+I'd be more than happy to discuss the reasons behind those two refactors.
 
 ## Your feedback
 
