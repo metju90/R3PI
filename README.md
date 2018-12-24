@@ -10,7 +10,7 @@ Website performance is a field which I find very interesting and I've put an eff
 
 - Code splitting, lazy loading content - I've made use of React's latest (hmm, sounds strange to say "React's latest" without including hooks) features `Suspense` and `lazy`. Code splitting is essential for a faster first paint and time to interactive.
 
-- Images loading - When a bunch of requests were being made to load images, until the actual image were fully loaded I expierenced alot of flickering and blank spaces which surely did not help the UX. To prevent this, i built `Image` component found in `src/components/Image`.
+- Images loading - When a bunch of requests were being made to load images, until the actual image were fully loaded I experienced plenty of flickers and blank spaces which surely did not help the UX. To prevent this, i built `Image` component found in `src/components/Image`.
 
 - Preloading - In one particular case, I manually-preloaded content for the user(Followers tab, user profile)
 
@@ -18,11 +18,11 @@ Website performance is a field which I find very interesting and I've put an eff
 
 ## Features (non-technical)
 
-On top of the listed requirments, I added the following:
+On top of the listed requirements, I added the following:
 
-- User profile - Clicking on any user from the home page will direct you to a user's dashboard. I've been pragmatic and included limited but suffiecent features to demostrate my skills. Does include: Users personal details, repositeries and followers.
-- Navigation - Additional to the two required routes, certain section of the User profile (reposotreies and followers) are accessible with a direct link. When seeing a user followers, clicking a particular follower will take you to his/her profile.
-- Pagiation - Pagiation is used in the homepage and as well in the user profile when provided by the API.
+- User profile - Clicking on any user from the home page will direct you to a user's dashboard. I've been pragmatic and included limited but sufficient features to demonstrate my skills. Does include: Users personal details, repositories and followers.
+- Navigation - Additional to the two required routes, certain section of the User profile (repositories and followers) are accessible with a direct link. When seeing a user followers, clicking a particular follower will take you to his/her profile.
+- Pagination - Pagination is used in the homepage and as well in `Repos` and `Followers` tab in user's profile.
 
 # Reusability
 
@@ -33,10 +33,11 @@ I reused as many components as I could. Namely:
 
 # Abstractions
 
-As an engineer, I do love abstractions and I try my best to keep my code `dry`. Look for the following:
+As an engineer, I do love abstractions and I tried to the best of my abilities to keep my code `dry`. You can see my attempts in the following files:
 
 - `src/actions/common`
 - `src/components/Pagination`
+- `src/redux/reducers/*`
 
 ## UI - design
 
@@ -49,29 +50,33 @@ However, my UI design skills are very basic and thus, i've created a very simple
 I put great effort to ensure the UX is good. I applied:
 
 - Loading spinners
-- Default static image - while the actual image loads to minimize flickers and enhances the smoothness of the website.
-- Resetting application state - Upon `UserDashboard` componens unmount, I am resetting their respective global state to
+- Default static image - To be shown in every image while the actual image is loading to mitigate/eliminate flickers and enhances the smoothness of the website.
+- Resetting application state - Upon `UserDashboard` component unmount, I am resetting their respective global state to
 
 ## CSS
 
-One of the early decision which I took was on whether to use any `CSS` processor or not. When I learned `TypeScript` is a must to use, due to my lack of experience with the technology, I knew it could potentionally consume a considerable amount of my time and therefore, for such a small application I decided to go with vanilla CSS.
+One of the early decision which I took was on whether to use any `CSS` processor or not. When I learned `TypeScript` is a must to use, due to my lack of experience with the technology, I knew it could potentially consume a considerable amount of my time and therefore, for such a small application I decided to go with vanilla CSS.
 
-FYI, I am a fan of CSS in JS. `styled-components` in particual.
+FYI, I am a fan of CSS in JS. `styled-components` in particular.
 
-I built the Vanilla CSS with mobile-first approach. I explained what mobile-first apporach CSS in this [stackoverflow answer](https://stackoverflow.com/questions/51233235/css-techniques-for-responsive-web-design/51233397#answer-51233397)
+I built the Vanilla CSS with mobile-first approach. I explained what mobile-first approach CSS in this [stackoverflow answer](https://stackoverflow.com/questions/51233235/css-techniques-for-responsive-web-design/51233397#answer-51233397)
 
 ## TypeScript
 
-I apprecicate the benefits of type checking but unforetuneatly I dont have much experience with Ts. After spending a conserdiable amount of time on researching how to compile TS, I decided to take some shortcuts by ignore certain rules and abusing the type of `any`.
+I appreciate the benefits of type checking but unfortunately I dont have much experience with Ts. After spending a considerable amount of time on researching how to compile TS, I decided to take some shortcuts by ignore certain rules and abusing the type of `any`.
 
 ## Error handling
 
-I am just showing a simple message incase of a critical error. Ideally I render a nice 500 error page. For this particular case I thought it was not neccessary.
+I am just showing a simple generic error message incase of a critical error. Ideally I render an error message more inline with what went wrong (i.e. show page cannot be found for 404 error). For this particular case I thought what I did is sufficient.
+
+## Unit Testing
+
+Testing is very important part for sustainable and scalable software. I preferred investing my time on illustrating my code rather than making unit testing since this is not a production-ready application
+
+## Github's API access token
+
+The token is in the source code. I will revoke the token's permission once this review is finished.
 
 ## Your feedback
 
-I will greatly apprecicate your honest and straight forward feedback.
-
-error message is too simple...
-
-access token, can be used without any probs.
+I will greatly appreciate your honest and straight forward feedback. I consider criticism on my software as a starting point for a conversation and/or room for improvement
