@@ -3,7 +3,8 @@ import {
   FETCH_REPOS,
   FETCH_REPOS_ERROR,
   FETCH_REPOS_LOADING,
-  FETCH_REPOS_PAGES
+  FETCH_REPOS_PAGES,
+  RESET_REPOS
 } from "../constants";
 import { commonAction } from "./common";
 
@@ -16,4 +17,7 @@ const fetchRepos = (url: string) => async (dispatch: any) => {
   };
   commonAction(url, dispatch, actionTypes);
 };
-export { fetchRepos };
+
+const resetRepos = () => (dispatch: any) => dispatch({ type: RESET_REPOS });
+
+export { fetchRepos, resetRepos };

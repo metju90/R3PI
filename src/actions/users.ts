@@ -21,7 +21,7 @@ import { commonAction } from "./common";
 const getFirstUserId = (usersList: any) => usersList[0] && usersList[0].id;
 
 const fetchUsersList = (url?: string | null) => async (dispatch: any) => {
-  dispatch({ type: FETCH_USERS_LIST_LOADING, payload: true });
+  dispatch({ type: FETCH_USERS_LIST_LOADING, payload: { isLoading: true } });
   try {
     const response = await fetchGet(`${url ? url : `${API_ROOT_URL}/users`}`);
     if (response.status < 200 || response.status >= 300) {
@@ -42,20 +42,27 @@ const fetchUsersList = (url?: string | null) => async (dispatch: any) => {
     }
     dispatch({
       type: FETCH_USERS_LIST_PAGES,
-      payload: pagination
+      payload: {
+        pages: pagination
+      }
     });
     dispatch({
       type: FETCH_USERS_LIST,
-      payload: responseData
+      payload: {
+        data: responseData,
+        isLoading: false
+      }
     });
   } catch (err) {
     console.error("FETCH_USERS_LIST_ERROR", err);
     dispatch({
       type: FETCH_USERS_LIST_ERROR,
-      payload: true
+      payload: {
+        hasError: true,
+        isLoading: false
+      }
     });
   }
-  dispatch({ type: FETCH_USERS_LIST_LOADING, payload: false });
 };
 
 const resetUserDetails = () => (dispatch: any) =>

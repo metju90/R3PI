@@ -13,20 +13,12 @@ const initialState = {
 
 export default function(state = initialState, action: any) {
   switch (action.type) {
+    case FETCH_USER_DETAILS_LOADING:
     case FETCH_USER_DETAILS_ERROR:
-      return {
-        ...state,
-        ...action.payload
-      };
     case FETCH_USER_DETAILS:
       return {
         ...state,
         ...action.payload
-      };
-    case FETCH_USER_DETAILS_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload
       };
     case RESET_USER_DETAILS: {
       return {

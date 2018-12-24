@@ -7,7 +7,8 @@ import {
   fetchUserDetails,
   resetUserDetails,
   fetchFollowers,
-  fetchRepos
+  fetchRepos,
+  resetRepos
 } from "../../actions";
 
 import Spinner from "../LoadingSpinner";
@@ -21,10 +22,6 @@ interface Props {
   userDetails: any;
   followers: any;
   repos: any;
-  fetchUserDetails(username: string): void;
-  resetUserDetails(): void;
-  fetchRepos(url?: string): void;
-  fetchFollowers(url?: string): void;
   match: {
     params: {
       username: string;
@@ -32,6 +29,11 @@ interface Props {
   };
   history: any;
   location: any;
+  fetchUserDetails(username: string): void;
+  resetUserDetails(): void;
+  fetchRepos(url?: string): void;
+  fetchFollowers(url?: string): void;
+  resetRepos(): void;
 }
 
 class UserDashboard extends Component<Props> {
@@ -71,12 +73,23 @@ class UserDashboard extends Component<Props> {
   }
 
   componentWillUnmount() {
+    // Without the following two, when visiting the second user profile,
+    // for a very short moment (depending on how fast is your machine)
+    // you'd see the previous user data.
     this.props.resetUserDetails();
+    this.props.resetRepos();
   }
 
   handleSelect = (hash: any) => {
     this.props.history.push(hash);
     this.setState({ hash });
+  };
+
+  // Used to reset the count in `Repo(n)` and `Followers(n)`
+  // When the user data is being fetched.
+  getCountIfIsNotLoading = (count: number | null) => {
+    const { isLoading } = this.props.userDetails;
+    return `(${isLoading ? 0 : count ? count : 0})`;
   };
 
   render() {
@@ -138,17 +151,23 @@ class UserDashboard extends Component<Props> {
           >
             <Tab
               eventKey={"#repositories"}
-              title={`Repositories (${public_repos || 0})`}
+              title={`Repositories ${this.getCountIfIsNotLoading(
+                public_repos
+              )}`}
             >
               {reposReducer && (
                 <Suspense fallback={<Spinner />}>
-                  <Repos repos={reposReducer} fetchRepos={fetchRepos} />
+                  <Repos
+                    isUserDetailsLoading={isUserDetailsLoading}
+                    repos={reposReducer}
+                    fetchRepos={fetchRepos}
+                  />
                 </Suspense>
               )}
             </Tab>
             <Tab
               eventKey={"#followers"}
-              title={`Followers (${followersCount || 0})`}
+              title={`Followers ${this.getCountIfIsNotLoading(followersCount)}`}
             >
               {followersReducer && (
                 <Suspense fallback={<Spinner />}>
@@ -169,7 +188,6 @@ class UserDashboard extends Component<Props> {
 
 const mapStateToProps = (state: any) => {
   const { userDetails, followers, repos } = state;
-
   return {
     userDetails,
     followers,
@@ -181,7 +199,8 @@ const mapDispatchToProps = {
   fetchUserDetails,
   resetUserDetails,
   fetchFollowers,
-  fetchRepos
+  fetchRepos,
+  resetRepos
 };
 
 export default connect(

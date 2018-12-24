@@ -2,7 +2,8 @@ import {
   FETCH_REPOS,
   FETCH_REPOS_ERROR,
   FETCH_REPOS_LOADING,
-  FETCH_REPOS_PAGES
+  FETCH_REPOS_PAGES,
+  RESET_REPOS
 } from "../../constants";
 import commonState from "../commonState";
 
@@ -12,26 +13,17 @@ const initialState = {
 
 export default function(state = initialState, action: any) {
   switch (action.type) {
-    case FETCH_REPOS_ERROR: {
-      return {
-        ...state,
-        ...action.payload
-      };
-    }
+    case FETCH_REPOS_ERROR:
     case FETCH_REPOS:
-      return {
-        ...state,
-        ...action.payload
-      };
     case FETCH_REPOS_PAGES:
-      return {
-        ...state,
-        pages: action.payload
-      };
     case FETCH_REPOS_LOADING:
       return {
         ...state,
-        isLoading: action.payload
+        ...action.payload
+      };
+    case RESET_REPOS:
+      return {
+        ...initialState
       };
     default:
       return state;

@@ -46,7 +46,11 @@ However, my UI design skills are very basic and thus, i've created a very simple
 
 ## UX
 
-I put great effort to ensure the UX is good. I am using spinners and rendering static images while the actual one loads to minimize flickers and enhances the smoothness of the website.
+I put great effort to ensure the UX is good. I applied:
+
+- Loading spinners
+- Default static image - while the actual image loads to minimize flickers and enhances the smoothness of the website.
+- Resetting application state - Upon `UserDashboard` componens unmount, I am resetting their respective global state to
 
 ## CSS
 

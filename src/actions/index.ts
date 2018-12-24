@@ -1,5 +1,5 @@
 import { fetchUsersList, fetchUserDetails, resetUserDetails } from "./users";
-import { fetchRepos } from "./repos";
+import { fetchRepos, resetRepos } from "./repos";
 import { fetchFollowers } from "./followers";
 
 export {
@@ -7,5 +7,6 @@ export {
   fetchUserDetails,
   fetchRepos,
   resetUserDetails,
-  fetchFollowers
+  fetchFollowers,
+  resetRepos
 };

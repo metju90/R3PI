@@ -14,13 +14,16 @@ const commonAction = async (
   dispatch: any,
   actionTypes: ActionTypesProps
 ) => {
-  dispatch({ type: actionTypes.loading, payload: true });
+  dispatch({ type: actionTypes.loading, payload: { isLoading: true } });
   try {
     const response = await fetchGet(url);
     if (response.status < 200 || response.status >= 300) {
       dispatch({
         type: actionTypes.error,
-        payload: true
+        payload: {
+          hasError: true,
+          isLoading: false
+        }
       });
       return null;
     }
@@ -31,7 +34,9 @@ const commonAction = async (
     if (actionTypes.pages) {
       dispatch({
         type: actionTypes.pages,
-        payload: pagination
+        payload: {
+          pages: pagination
+        }
       });
     }
     dispatch({

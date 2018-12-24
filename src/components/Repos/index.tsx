@@ -16,11 +16,12 @@ interface Props {
     hasError: boolean;
     pages: any;
   };
+  isUserDetailsLoading: boolean;
 }
 
-const Repos = ({ repos, fetchRepos }: Props) => {
+const Repos = ({ repos, fetchRepos, isUserDetailsLoading }: Props) => {
   const { data, isLoading, hasError, pages } = repos;
-  if (isLoading) {
+  if (isLoading || isUserDetailsLoading) {
     return <Spinner />;
   }
   return (
