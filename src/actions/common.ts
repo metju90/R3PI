@@ -1,26 +1,15 @@
 import { fetchGet } from "../util";
-import { FETCH_USERS_LIST_PAGES } from "../constants";
+import { FETCH_USERS_LIST } from "../constants";
 import linkHeaderParser from "parse-link-header";
 import urlTemplate from "url-template";
 
-interface ActionTypesProps {
-  loading: string;
-  data: string;
-  error: string;
-  pages?: string;
-}
-
-const commonAction = async (
-  url: string,
-  dispatch: any,
-  actionTypes: ActionTypesProps
-) => {
-  dispatch({ type: actionTypes.loading, payload: { isLoading: true } });
+const commonAction = async (url: string, dispatch: any, actionType: string) => {
+  dispatch({ type: actionType, payload: { isLoading: true } });
   try {
     const response = await fetchGet(url);
     if (response.status < 200 || response.status >= 300) {
       dispatch({
-        type: actionTypes.error,
+        type: actionType,
         payload: {
           hasError: true,
           isLoading: false
@@ -32,28 +21,17 @@ const commonAction = async (
     let headers: any;
     headers = response.headers;
     const pagination = linkHeaderParser(headers.get("Link")) || null;
-    if (actionTypes.pages) {
-      // This is used only for the users list.
-      if (
-        pagination &&
-        pagination.first &&
-        actionTypes.pages === FETCH_USERS_LIST_PAGES
-      ) {
-        pagination.first.url = urlTemplate
-          .parse(pagination.first.url)
-          .expand({ since: 0 });
-      }
-      dispatch({
-        type: actionTypes.pages,
-        payload: {
-          pages: pagination
-        }
-      });
+    // This is used only for the users list.
+    if (pagination && pagination.first && actionType === FETCH_USERS_LIST) {
+      pagination.first.url = urlTemplate
+        .parse(pagination.first.url)
+        .expand({ since: 0 });
     }
     dispatch({
-      type: actionTypes.data,
+      type: actionType,
       payload: {
         data: responseData,
+        pages: pagination,
         isLoading: false,
         hasError: false
       }
@@ -61,7 +39,7 @@ const commonAction = async (
   } catch (err) {
     console.error("FETCH_FOLLOWERS_ERROR", err);
     dispatch({
-      type: actionTypes.error,
+      type: actionType,
       payload: {
         isLoading: false,
         hasError: true
