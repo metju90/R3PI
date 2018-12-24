@@ -1,9 +1,7 @@
 import React, { memo } from "react";
-import { connect } from "react-redux";
 import { distanceInWordsToNow } from "date-fns";
 import uuid from "uuid";
 
-import { fetchRepos } from "../../actions";
 import Paginaton from "../Pagination";
 import Spinner from "../LoadingSpinner";
 import Language from "./Language";
@@ -20,21 +18,14 @@ interface Props {
 }
 
 const Repos = ({ repos, fetchRepos, isUserDetailsLoading }: Props) => {
-  const { data, isLoading, hasError, pages } = repos;
+  const { data, isLoading, pages } = repos;
   if (isLoading || isUserDetailsLoading) {
     return <Spinner />;
   }
   return (
     <div className="repos-tab">
       {data.map((repo: any) => {
-        const {
-          language,
-          homepage,
-          name,
-          updated_at,
-          description,
-          forks
-        } = repo;
+        const { language, homepage, name, updated_at, description } = repo;
         return (
           <div className="repo" key={uuid()}>
             <h2>

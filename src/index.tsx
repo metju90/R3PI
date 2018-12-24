@@ -2,13 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Col } from "react-bootstrap";
 import { Provider } from "react-redux";
-import {
-  Router,
-  Route,
-  Link,
-  Switch,
-  RouteComponentProps
-} from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 
 import { getStore, init as storeInit } from "./redux/store";
 import history from "./history";

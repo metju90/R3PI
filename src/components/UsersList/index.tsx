@@ -1,8 +1,6 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import debounce from "lodash/debounce";
-import { Link } from "react-router-dom";
-import { Table, Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import uuid from "uuid";
 
 import { fetchUsersList } from "../../actions";

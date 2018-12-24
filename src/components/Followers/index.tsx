@@ -1,8 +1,6 @@
 import React, { memo } from "react";
-import { connect } from "react-redux";
 import uuid from "uuid";
 
-import { fetchFollowers } from "../../actions";
 import Paginaton from "../Pagination";
 import Spinner from "../LoadingSpinner";
 import UserLink from "../UserLink";
@@ -24,7 +22,7 @@ const Followers = ({
   fetchFollowers,
   isUserDetailsLoading
 }: Props) => {
-  const { data, isLoading, hasError, pages } = followers;
+  const { data, isLoading, pages } = followers;
   if (isLoading || isUserDetailsLoading) {
     return <Spinner />;
   }
@@ -38,18 +36,6 @@ const Followers = ({
       {pages && <Paginaton handleOnClick={fetchFollowers} pages={pages} />}
     </div>
   );
-};
-
-const mapStateToProps = (state: any) => {
-  const {
-    followers: { pages, data, isLoading, hasError }
-  } = state;
-  return {
-    pages,
-    data,
-    isLoading,
-    hasError
-  };
 };
 
 export default memo(Followers);

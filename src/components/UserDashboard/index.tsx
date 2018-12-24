@@ -1,7 +1,7 @@
 import React, { Component, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import { Col, Tabs, Tab, Alert } from "react-bootstrap";
-import { Link, RouteComponentProps, RouteProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   fetchUserDetails,
@@ -56,7 +56,6 @@ class UserDashboard extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     const { username } = this.props.match.params;
     const { repos_url, followers_url } = this.props.userDetails.data;
-    const followers = this.props;
 
     if (username != prevProps.match.params.username) {
       this.props.fetchUserDetails(username);
@@ -106,7 +105,6 @@ class UserDashboard extends Component<Props> {
     } = this.props.userDetails;
     const {
       name,
-      repos_url,
       public_repos,
       followers: followersCount,
       avatar_url,
@@ -116,8 +114,7 @@ class UserDashboard extends Component<Props> {
       blog,
       location,
       email,
-      organizations_url,
-      followers_url
+      organizations_url
     } = data;
     const personalData = {
       blog,

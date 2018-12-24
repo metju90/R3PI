@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {} from "react-bootstrap";
-import classNames from "classnames";
 
 import Image from "../Image";
 

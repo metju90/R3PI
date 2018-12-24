@@ -1,5 +1,4 @@
 import React from "react";
-import ReactPaginate from "react-paginate";
 import { Pager } from "react-bootstrap";
 import differenceWith from "lodash/differenceWith";
 import isEqual from "lodash/isEqual";

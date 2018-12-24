@@ -1,5 +1,3 @@
-import { API_ROOT_URL } from "../constants";
-
 export function fetchGet(url: string) {
   let urlToken = url;
   if (!url.includes("access_token")) {
