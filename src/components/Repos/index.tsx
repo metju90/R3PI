@@ -25,11 +25,11 @@ const Repos = ({ repos, fetchRepos, isUserDetailsLoading }: Props) => {
   return (
     <div className="repos-tab">
       {data.map((repo: any) => {
-        const { language, homepage, name, updated_at, description } = repo;
+        const { language, html_url, name, updated_at, description } = repo;
         return (
           <div className="repo" key={uuid()}>
             <h2>
-              <a href={homepage} target="_blank">
+              <a href={html_url} target="_blank">
                 {name}
               </a>
             </h2>
