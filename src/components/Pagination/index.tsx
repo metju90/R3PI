@@ -14,6 +14,12 @@ interface Props {
   excludedPages?: Array<string>;
 }
 
+interface PagerItemProps {
+  disabled: boolean;
+  key: any;
+  onClick?(): void;
+}
+
 const ALL_PAGES = ["first", "prev", "next", "last"];
 
 const upperCaseFirstLetter = (word: string) =>
@@ -31,7 +37,7 @@ const Pagination = ({ pages, handleOnClick, excludedPages }: Props) => {
     <Pager>
       {availablePages.map((key: string) => {
         const page = (pages as any)[key];
-        const props: any = {
+        const props: PagerItemProps = {
           disabled: page ? false : true,
           key: uuid()
         };
