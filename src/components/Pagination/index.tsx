@@ -16,6 +16,9 @@ interface Props {
 
 const ALL_PAGES = ["first", "prev", "next", "last"];
 
+const upperCaseFirstLetter = (word: string) =>
+  word.charAt(0).toUpperCase() + word.slice(1);
+
 const Pagination = ({ pages, handleOnClick, excludedPages }: Props) => {
   const availablePages = differenceWith(
     ALL_PAGES,
@@ -23,21 +26,20 @@ const Pagination = ({ pages, handleOnClick, excludedPages }: Props) => {
     excludedPages,
     isEqual
   );
+
   return (
     <Pager>
       {availablePages.map((key: string) => {
         const page = (pages as any)[key];
-        if (!page) {
-          return (
-            <Pager.Item disabled={true} key={uuid()}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </Pager.Item>
-          );
-        }
-        const { url, rel } = page;
+        const props: any = {
+          disabled: page ? false : true,
+          key: uuid()
+        };
+        // dynamically adding `onClick` prop if the page is enabled
+        if (page) props.onClick = handleOnClick.bind(null, page.url);
         return (
-          <Pager.Item onClick={handleOnClick.bind(null, url)} key={uuid()}>
-            {rel.charAt(0).toUpperCase() + rel.slice(1)}
+          <Pager.Item {...props}>
+            {upperCaseFirstLetter(page ? page.rel : key)}
           </Pager.Item>
         );
       })}
