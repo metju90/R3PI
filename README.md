@@ -51,7 +51,7 @@ I put great effort to ensure the UX is good. I applied:
 
 - Loading spinners
 - Default static image - To be shown in every image while the actual image is loading to mitigate/eliminate flickers and enhances the smoothness of the website.
-- Resetting application state - Upon `UserDashboard` component unmount, I am resetting their respective global state to
+- Resetting  global state - Upon `UserDashboard` component unmount, I am resetting its respective global state to avoid showing the previous user's data until the newly requested data is being fetched.
 
 ## CSS
 
