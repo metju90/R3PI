@@ -63,11 +63,11 @@ I built the Vanilla CSS with mobile-first approach. I explained what mobile-firs
 
 ## TypeScript
 
-I appreciate the benefits of type checking but unfortunately I dont have much experience with Ts. After spending a considerable amount of time on researching how to compile TS, I decided to take some shortcuts by ignore certain rules and abusing the type of `any`.
+I appreciate the benefits of type checking but unfortunately I dont have much experience with TS. After spending a considerable amount of time on researching how to compile TS, I decided to take some shortcuts by ignoring certain rules and abuse the type of `any`.
 
 ## Error handling
 
-I am just showing a simple generic error message incase of a critical error. Ideally I render an error message more inline with what went wrong (i.e. show page cannot be found for 404 error). For this particular case I thought what I did is sufficient.
+I am just showing a simple generic error message incase of a critical error. Ideally I render an error message more inline with what went wrong (i.e. show page cannot be found for 404 error and to show a different page for  500 error). For this particular case I thought what I did is sufficient.
 
 ## Unit Testing
 
