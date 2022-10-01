@@ -17,9 +17,9 @@
     "@types/uuid": "^3.4.4",
     "classnames": "^2.2.6",
     "date-fns": "^1.30.1",
-    "lodash": "^4.17.11",
-    "npm": "^6.5.0",
-    "parse-link-header": "^1.0.1",
+    "lodash": "^4.17.21",
+    "npm": "^7.21.0",
+    "parse-link-header": "^2.0.0",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.3",
@@ -27,19 +27,22 @@
     "react-paginate": "^6.0.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1",
+    "react-scripts": "5.0.0",
     "react-spinners": "^0.11.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "typescript": "^3.9.10",
     "url-template": "^2.0.8",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "@snyk/protect": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +52,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "snyk": true
 }
