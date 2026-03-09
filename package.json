@@ -20,7 +20,7 @@
     "lodash": "^4.17.11",
     "npm": "^6.5.0",
     "parse-link-header": "^1.0.1",
-    "react": "^16.6.3",
+    "react": "^19.2.4",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.3",
     "react-icons": "^3.2.2",
